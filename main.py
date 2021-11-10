@@ -5,4 +5,4 @@ r = requests.get(url)
 string = r.content.decode("utf-8")
 
 print(string)
-print(string[5])
+print(string[5])  # me like
