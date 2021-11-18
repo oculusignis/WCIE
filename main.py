@@ -6,3 +6,6 @@ string = r.content.decode("utf-8")
 
 print(string)
 print(string[5])  # me like <- git test
+
+print("Useless string")
+
