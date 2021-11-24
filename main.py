@@ -12,8 +12,6 @@ def fileScanner():
             dataDict[dataList[0]] = dataList[1]             #adds element to dictionary: 1. substring as key, 2. substring as value
     return dataDict
 
-print(fileScanner())
-
 ##API URL
 url = "http://meteolakes.ch/api/coordinates/534700/144950/geneva/temperature/1637478000000/1637485200000/1"
 r = requests.get(url)
