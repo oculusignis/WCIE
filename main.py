@@ -1,5 +1,17 @@
 import requests
 
+# dict with the location name as keys and the swiss1903 coordinates as values
+locations = {"Rapperswil OST Campus": (704301, 231052),
+             "Rapperswil Seebad": (704077, 231654 ),
+             "Schmerikon Badi": (714163, 231433),
+             "Insel Lützelau Nordost": (703019, 23235),
+             "Zürich Seebad Utoquai": (683598, 246245 ),
+             "Strandbad Meilen": (691516, 235727),
+             "Lachen SZ": (706947, 228423),
+             "Noulen SZ": (709651, 229673)
+             }
+
+
 def templist(url):
     """converts the url response to a list containing only the temperatures"""
     # get the data and save as string
@@ -10,7 +22,8 @@ def templist(url):
     # convert strings in list to float
     float_list = [float(x) for x in data_list]
     return float_list
-  
+
+
 def fileScanner():
     """Returns a dictionary with location name as key and a string of water temperatures as value.
     Locations and values read in from text file "tempData.txt" """
@@ -23,7 +36,8 @@ def fileScanner():
             dataDict[dataList[0]] = dataList[1]             #adds element to dictionary: 1. substring as key, 2. substring as value
     return dataDict
 
-##API URL
-url = "http://meteolakes.ch/api/coordinates/534700/144950/geneva/temperature/1537034400000/1537768800000/20"
-temp_list = templist(url)
+
+# API URL
+testurl = "http://meteolakes.ch/api/coordinates/534700/144950/geneva/temperature/1537034400000/1537768800000/20"
+temp_list = templist(testurl)
 print(temp_list)
