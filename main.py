@@ -34,12 +34,7 @@ def dict_printer(data_dict):
         print(f"{key}: {data_dict[key][int(datetime.datetime.now().hour/3)]}")
 
 
-dict_printer(file_scanner())
-
-
-
-
 ##API URL
 url = "http://meteolakes.ch/api/coordinates/534700/144950/geneva/temperature/1537034400000/1537768800000/20"
 temp_list = templist(url)
-# print(temp_list)
+print(temp_list)
