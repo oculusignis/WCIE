@@ -1,11 +1,13 @@
 import requests
+import datetime
+
 
 # dict with the location name as keys and the swiss1903 coordinates as values
 locations = {"Rapperswil OST Campus": (704301, 231052),
-             "Rapperswil Seebad": (704077, 231654 ),
+             "Rapperswil Seebad": (704077, 231654),
              "Schmerikon Badi": (714163, 231433),
              "Insel Lützelau Nordost": (703019, 23235),
-             "Zürich Seebad Utoquai": (683598, 246245 ),
+             "Zürich Seebad Utoquai": (683598, 246245),
              "Strandbad Meilen": (691516, 235727),
              "Lachen SZ": (706947, 228423),
              "Noulen SZ": (709651, 229673)
@@ -24,17 +26,23 @@ def templist(url):
     return float_list
 
 
-def fileScanner():
+def file_scanner():
     """Returns a dictionary with location name as key and a string of water temperatures as value.
     Locations and values read in from text file "tempData.txt" """
-    dataDict = dict()
-    maxsplit = 1
+    data_dict = dict()
     with open("tempData.txt") as file:
-        for line in file:                                   #iteration line by line
-            dataString = line.rstrip()                      #reads line into string
-            dataList = dataString.split(",", maxsplit)      #splits string into 2 substrings after first comma
-            dataDict[dataList[0]] = dataList[1]             #adds element to dictionary: 1. substring as key, 2. substring as value
-    return dataDict
+        for line in file:                             # iteration line by line
+            data_string = line.rstrip()               # reads line into string
+            data_list = data_string.split(",")        # splits string into substrings after every comma
+            data_dict[data_list[0]] = list(float(x) for x in data_list[1:-1])  # adds element to dictionary:
+            # 1. substring as key, others as float numbers
+    return data_dict
+
+
+def dict_printer(data_dict):
+    """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
+    for key in data_dict:
+        print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>}")
 
 
 # API URL
