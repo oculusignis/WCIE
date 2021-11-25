@@ -31,7 +31,7 @@ def file_scanner():
 def dict_printer(data_dict):
     """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
     for key in data_dict:
-        print(f"{key}: {data_dict[key][int(datetime.datetime.now().hour/3)]}")
+        print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>}")
 
 
 ##API URL
