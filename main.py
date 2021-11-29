@@ -6,7 +6,7 @@ import datetime
 locations = {"Rapperswil OST Campus": (704301, 231052),
              "Rapperswil Seebad": (704077, 231654),
              "Schmerikon Badi": (714163, 231433),
-             "Insel Lützelau Nordost": (703019, 23235),
+             "Insel Lützelau Nordost": (700533, 231177),
              "Zürich Seebad Utoquai": (683598, 246245),
              "Strandbad Meilen": (691516, 235727),
              "Lachen SZ": (706947, 228423),
@@ -53,7 +53,8 @@ def file_scanner():
 def dict_printer(data_dict):
     """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
     for key in data_dict:
-        print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>}")
+        print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>.1f} °C")
+
 
 def timestamp():
     # get the current GTM time zone date and time
@@ -94,4 +95,4 @@ def savetofile(dataDictionary):
 
 
 # API URL
-print(datadict())
+dict_printer(datadict())
