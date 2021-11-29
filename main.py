@@ -1,5 +1,6 @@
 import requests
 import datetime
+import os
 
 
 # dict with the location name as keys and the swiss1903 coordinates as values
@@ -80,6 +81,22 @@ def timestamp():
 
     return millisecstart, millisecend
 
+def datecomparison():
+    filedate_epoch = os.path.getmtime("tempData.txt")
+    print(filedate_epoch)
+
+    full_filedate = datetime.datetime.fromtimestamp(filedate_epoch)
+    print(full_filedate)
+
+    filedate = full_filedate.strftime("%Y-%m-%d")
+    print(filedate)
+
+    #current_timedate_gtm = datetime.datetime.utcnow()
+    #current_date_gtm = current_date_gtm.strftime("%Y-%m-%d")
+    #print(current_date_gtm)
+
+
+
 
 ## Function to save a Dictionary
 # The Dictionary will be saved line per line 
@@ -95,4 +112,6 @@ def savetofile(dataDictionary):
 
 
 # API URL
-dict_printer(datadict())
+#dict_printer(datadict())
+datecomparison()
+
