@@ -1,4 +1,6 @@
 import requests
+import datetime
+
 
 # dict with the location name as keys and the swiss1903 coordinates as values
 locations = {"Rapperswil OST Campus": (704301, 231052),
@@ -38,18 +40,61 @@ def datadict():
     return data
 
 
-def fileScanner():
+def file_scanner():
     """Returns a dictionary with location name as key and a string of water temperatures as value.
     Locations and values read in from text file "tempData.txt" """
-    dataDict = dict()
-    maxsplit = 1
+    data_dict = dict()
     with open("tempData.txt") as file:
-        for line in file:                                   # iteration line by line
-            dataString = line.rstrip()                      # reads line into string
-            dataList = dataString.split(",", maxsplit)      # splits string into 2 substrings after first comma
-            dataDict[dataList[0]] = dataList[1]             # adds element to dictionary: 1. substring as key, 2. substring as value
-    return dataDict
+        for line in file:                             # iteration line by line
+            data_string = line.rstrip()               # reads line into string
+            data_list = data_string.split(",")        # splits string into substrings after every comma
+            data_dict[data_list[0]] = list(float(x) for x in data_list[1:-1])  # adds element to dictionary:
+            # 1. substring as key, others as float numbers
+    return data_dict
 
+
+def dict_printer(data_dict):
+    """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
+    for key in data_dict:
+        print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>}")
+
+def timestamp():
+
+    import datetime
+    # get the current GTM time zone date and time
+    current_date_gtm = datetime.datetime.utcnow()
+
+    # get the current local time zone date and time (for future use)
+    # current_date = datetime.datetime.now()
+
+    # convert current GTM date to string with current time at 00:00:00
+    string_date_start = current_date_gtm.strftime("%Y-%m-%d 00:00:00")
+    # convert current GTM date to string with current time at 21:00:00
+    string_date_end = current_date_gtm.strftime("%Y-%m-%d 21:00:00")
+
+    #convert day start string into object
+    date_object_start = datetime.datetime.strptime(string_date_start, "%Y-%m-%d %H:%M:%S")
+    # convert day end string into object
+    date_object_end = datetime.datetime.strptime(string_date_end, "%Y-%m-%d %H:%M:%S")
+
+    #Multiply the timestamp of the datetime object day start by 1'000 to convert into millisec and round to remove .0
+    millisecstart = round(date_object_start.timestamp() * 1000)
+    # Multiply the timestamp of the datetime object day end by 1'000 to convert into millisec and round to remove .0
+    millisecend = round(date_object_end.timestamp() * 1000)
+
+    return millisecstart, millisecend
+
+## Function to save a Dictionary
+# The Dictionary will be saved line per line 
+# with the key and the value separated by a comma.
+def savetofile (dataDictionary):
+    """save dictionary to file line per line (key and value separated by comma)"""
+    with open('tempData.txt', 'w') as f:
+        for key, value in dataDictionary.items():
+            newval = str(value)
+            newval = newval.replace("[", "")
+            newval = newval.replace("]", "")
+            f.write(str(key) + "," + newval + "\n")
 
 # API URL
 testurl = "http://meteolakes.ch/api/coordinates/534700/144950/geneva/temperature/1537034400000/1537768800000/20"
