@@ -28,15 +28,12 @@ def templist(url):
 
 def datadict():
     testtime = 1637762400000
-    # TODO francos time function should deliver time1, time2
-    time1 = testtime
-    time2 = testtime
+    time1, time2 = timestamp()
     data = {}
     for key in locations.keys():
         x, y = locations[key]
         loc_url = f"http://meteolakes.ch/api/coordinates/{x}/{y}/zurich/temperature/{time1}/{time2}/1"
         data[key] = templist(loc_url)
-        print(data[key])
     return data
 
 
@@ -59,8 +56,6 @@ def dict_printer(data_dict):
         print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>}")
 
 def timestamp():
-
-    import datetime
     # get the current GTM time zone date and time
     current_date_gtm = datetime.datetime.utcnow()
 
@@ -72,22 +67,23 @@ def timestamp():
     # convert current GTM date to string with current time at 21:00:00
     string_date_end = current_date_gtm.strftime("%Y-%m-%d 21:00:00")
 
-    #convert day start string into object
+    # convert day start string into object
     date_object_start = datetime.datetime.strptime(string_date_start, "%Y-%m-%d %H:%M:%S")
     # convert day end string into object
     date_object_end = datetime.datetime.strptime(string_date_end, "%Y-%m-%d %H:%M:%S")
 
-    #Multiply the timestamp of the datetime object day start by 1'000 to convert into millisec and round to remove .0
+    # Multiply the timestamp of the datetime object day start by 1'000 to convert into millisec and round to remove .0
     millisecstart = round(date_object_start.timestamp() * 1000)
     # Multiply the timestamp of the datetime object day end by 1'000 to convert into millisec and round to remove .0
     millisecend = round(date_object_end.timestamp() * 1000)
 
     return millisecstart, millisecend
 
+
 ## Function to save a Dictionary
 # The Dictionary will be saved line per line 
 # with the key and the value separated by a comma.
-def savetofile (dataDictionary):
+def savetofile(dataDictionary):
     """save dictionary to file line per line (key and value separated by comma)"""
     with open('tempData.txt', 'w') as f:
         for key, value in dataDictionary.items():
@@ -96,9 +92,6 @@ def savetofile (dataDictionary):
             newval = newval.replace("]", "")
             f.write(str(key) + "," + newval + "\n")
 
+
 # API URL
-testurl = "http://meteolakes.ch/api/coordinates/534700/144950/geneva/temperature/1537034400000/1537768800000/20"
-temp_list = templist(testurl)
-print(temp_list)
-print("\n\n")
 print(datadict())
