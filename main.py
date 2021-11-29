@@ -1,6 +1,7 @@
 import requests
 import datetime
 
+
 # dict with the location name as keys and the swiss1903 coordinates as values
 locations = {"Rapperswil OST Campus": (704301, 231052),
              "Rapperswil Seebad": (704077, 231654),
@@ -69,8 +70,21 @@ def timestamp():
 
     return millisecstart, millisecend
 
+## Function to save a Dictionary
+# The Dictionary will be saved line per line 
+# with the key and the value separated by a comma.
+def savetofile (dataDictionary):
+    """save dictionary to file line per line (key and value separated by comma)"""
+    with open('tempData.txt', 'w') as f:
+        for key, value in dataDictionary.items():
+            newval = str(value)
+            newval = newval.replace("[", "")
+            newval = newval.replace("]", "")
+            f.write(str(key) + "," + newval + "\n")
 
 # API URL
 testurl = "http://meteolakes.ch/api/coordinates/534700/144950/geneva/temperature/1537034400000/1537768800000/20"
 temp_list = templist(testurl)
 print(temp_list)
+
+
