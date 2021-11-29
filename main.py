@@ -82,18 +82,23 @@ def timestamp():
     return millisecstart, millisecend
 
 def datecomparison():
+    #get epoch time of last file modification
     filedate_epoch = os.path.getmtime("tempData.txt")
     print(filedate_epoch)
-
+    #convert epoch time to normal time
     full_filedate = datetime.datetime.fromtimestamp(filedate_epoch)
     print(full_filedate)
-
+    #convert time into string,take away H-M-S and leave date alone
     filedate = full_filedate.strftime("%Y-%m-%d")
     print(filedate)
 
-    #current_timedate_gtm = datetime.datetime.utcnow()
-    #current_date_gtm = current_date_gtm.strftime("%Y-%m-%d")
-    #print(current_date_gtm)
+    # get the current GTM time zone date and time
+    current_timedate_gtm = datetime.datetime.utcnow()
+    # convert GTM time into string,take away H-M-S and leave date alone
+    current_date_gtm = current_date_gtm.strftime("%Y-%m-%d")
+    print(current_date_gtm)
+
+    #return (current_date_gtm = filedate)
 
 
 
