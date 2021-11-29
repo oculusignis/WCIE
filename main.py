@@ -1,7 +1,6 @@
 import requests
 import datetime
 
-
 # dict with the location name as keys and the swiss1903 coordinates as values
 locations = {"Rapperswil OST Campus": (704301, 231052),
              "Rapperswil Seebad": (704077, 231654),
@@ -43,6 +42,32 @@ def dict_printer(data_dict):
     """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
     for key in data_dict:
         print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>}")
+
+def timestamp():
+
+    import datetime
+    # get the current GTM time zone date and time
+    current_date_gtm = datetime.datetime.utcnow()
+
+    # get the current local time zone date and time (for future use)
+    # current_date = datetime.datetime.now()
+
+    # convert current GTM date to string with current time at 00:00:00
+    string_date_start = current_date_gtm.strftime("%Y-%m-%d 00:00:00")
+    # convert current GTM date to string with current time at 21:00:00
+    string_date_end = current_date_gtm.strftime("%Y-%m-%d 21:00:00")
+
+    #convert day start string into object
+    date_object_start = datetime.datetime.strptime(string_date_start, "%Y-%m-%d %H:%M:%S")
+    # convert day end string into object
+    date_object_end = datetime.datetime.strptime(string_date_end, "%Y-%m-%d %H:%M:%S")
+
+    #Multiply the timestamp of the datetime object day start by 1'000 to convert into millisec and round to remove .0
+    millisecstart = round(date_object_start.timestamp() * 1000)
+    # Multiply the timestamp of the datetime object day end by 1'000 to convert into millisec and round to remove .0
+    millisecend = round(date_object_end.timestamp() * 1000)
+
+    return millisecstart, millisecend
 
 
 # API URL
