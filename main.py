@@ -95,8 +95,19 @@ def datecomparison():
     # get the current GTM time zone date and time
     current_timedate_gtm = datetime.datetime.utcnow()
     # convert GTM time into string,take away H-M-S and leave date alone
-    current_date_gtm = current_date_gtm.strftime("%Y-%m-%d")
+    current_date_gtm = current_timedate_gtm.strftime("%Y-%m-%d")
     print(current_date_gtm)
+
+    #utc or gmt date?
+    print("utc or gmt date?")
+    crnt_dt = datetime.date.today()
+    print(crnt_dt)
+    #
+    #or
+    #
+    gmt_now = datetime.datetime.utcnow()
+    current_date = gmt_now.date()
+    print(current_date)
 
     #return (current_date_gtm = filedate)
 
