@@ -1,19 +1,6 @@
 import requests
 import datetime
 
-
-# dict with the location name as keys and the swiss1903 coordinates as values
-locations = {"Rapperswil OST Campus": (704301, 231052),
-             "Rapperswil Seebad": (704077, 231654),
-             "Schmerikon Badi": (714163, 231433),
-             "Insel Lützelau Nordost": (703125, 231500),
-             "Zürich Seebad Utoquai": (683598, 246245),
-             "Strandbad Meilen": (691516, 235727),
-             "Lachen SZ": (706947, 228423),
-             "Noulen SZ": (709651, 229673)
-             }
-
-
 def templist(url):
     """converts the url response to a list containing only the temperatures"""
     # get the data and save as string
@@ -27,9 +14,9 @@ def templist(url):
 
 
 def datadict():
-    testtime = 1637762400000
     time1, time2 = timestamp()
     data = {}
+    locations = location_scanner()
     for key in locations.keys():
         x, y = locations[key]
         loc_url = f"http://meteolakes.ch/api/coordinates/{x}/{y}/zurich/temperature/{time1}/{time2}/1"
@@ -41,7 +28,7 @@ def file_scanner():
     """Returns a dictionary with location name as key and a string of water temperatures as value.
     Locations and values read in from text file "tempData.txt" """
     data_dict = dict()
-    with open("tempData.txt") as file:
+    with open("tempData.txt", encoding="utf-8") as file:
         for line in file:                             # iteration line by line
             data_string = line.rstrip()               # reads line into string
             data_list = data_string.split(",")        # splits string into substrings after every comma
@@ -49,6 +36,17 @@ def file_scanner():
             # 1. substring as key, others as float numbers
     return data_dict
 
+def location_scanner():
+    """Returns a dictionary with location name as key and a tuple of int (X and Y coordinates) as value.
+    Locations and values read in from text file "locations.txt" """
+    location_dict = dict()
+    with open("locations.txt", encoding="utf-8") as file:
+        for line in file:                           # iteration line by line
+            data_string = line.rstrip()             # reads line into string
+            data_list = data_string.split(",")      # splits string into substrings after every comma
+            location_dict[data_list[0]] = (int(data_list[1]), int(data_list[2]))    # adds element to dictionary:
+            # 1. substring as key, 2. and 3. string as value (int tuple)
+    return location_dict
 
 def dict_printer(data_dict):
     """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
