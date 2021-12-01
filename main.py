@@ -1,5 +1,8 @@
 import requests
 import datetime
+import sys
+from PyQt5 import QtWidgets, QtCore
+
 
 def templist(url):
     """converts the url response to a list containing only the temperatures"""
@@ -94,3 +97,12 @@ def savetofile(dataDictionary):
 
 # API URL
 dict_printer(datadict())
+
+
+# GUI
+app = QtWidgets.QApplication(sys.argv)
+widget = QtWidgets.QWidget()
+widget.resize(400, 200)
+widget.setWindowTitle("This is PyQt Widget example")
+widget.show()
+exit(app.exec_())
