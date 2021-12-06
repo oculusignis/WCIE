@@ -2,6 +2,7 @@ import requests
 import datetime
 import os
 
+
 def templist(url):
     """converts the url response to a list containing only the temperatures"""
     # get the data and save as string
@@ -37,6 +38,7 @@ def file_scanner():
             # 1. substring as key, others as float numbers
     return data_dict
 
+
 def location_scanner():
     """Returns a dictionary with location name as key and a tuple of int (X and Y coordinates) as value.
     Locations and values read in from text file "locations.txt" """
@@ -48,6 +50,7 @@ def location_scanner():
             location_dict[data_list[0]] = (int(data_list[1]), int(data_list[2]))    # adds element to dictionary:
             # 1. substring as key, 2. and 3. string as value (int tuple)
     return location_dict
+
 
 def dict_printer(data_dict):
     """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
@@ -77,26 +80,24 @@ def timestamp():
 
     return millisecstart, millisecend
 
+
 def datecomparison():
-    """read last modified date of file and compare it to current date"""
-    #get epoch time of last file modification of file
+    """read last modified date of file and compare it to current date, returns bool"""
+    if not os.path.exists("tempData.txt"):
+        return False
+    # get epoch time of last file modification of file
     filedate_epoch = os.path.getmtime("tempData.txt")
-    #convert epoch time to normal time
+    # convert epoch time to normal time
     full_filedate = datetime.datetime.fromtimestamp(filedate_epoch)
-    #convert time into string,take away H-M-S and leave date alone
+    # convert time into string,take away H-M-S and leave date alone
     filedate = full_filedate.strftime("%Y-%m-%d")
-    print(filedate)
 
-    #give current date
+    # give current date
     current_date = datetime.date.today()
-    #convert current date object to string
+    # convert current date object to string
     string_current_date = current_date.strftime("%Y-%m-%d")
-    #return true if current date and filedate are the same
+    # return true if current date and filedate are the same
     return string_current_date == filedate
-
-
-
-
 
 
 ## Function to save a Dictionary
@@ -104,7 +105,7 @@ def datecomparison():
 # with the key and the value separated by a comma.
 def savetofile(dataDictionary):
     """save dictionary to file line per line (key and value separated by comma)"""
-    with open('tempData.txt', 'w') as f:
+    with open('tempData.txt', 'w', encoding='utf-8') as f:
         for key, value in dataDictionary.items():
             newval = str(value)
             newval = newval.replace("[", "")
@@ -112,7 +113,14 @@ def savetofile(dataDictionary):
             f.write(str(key) + "," + newval + "\n")
 
 
-# API URL
-dict_printer(datadict())
-datecomparison()
+# dict_printer(datadict())
+# datecomparison()
 
+# program execution
+if datecomparison():
+    location_temps = file_scanner()
+else:
+    location_temps = datadict()
+    savetofile(location_temps)
+
+dict_printer(location_temps)
