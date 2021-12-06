@@ -23,6 +23,7 @@ def datadict():
         x, y = locations[key]
         loc_url = f"http://meteolakes.ch/api/coordinates/{x}/{y}/zurich/temperature/{time1}/{time2}/1"
         data[key] = templist(loc_url)
+
     return data
 
 
@@ -65,8 +66,8 @@ def timestamp():
 
     # convert current date to string with time at 00:00:00
     string_date_start = current_datetime.strftime("%Y-%m-%d 00:00:00")
-    # convert current date to string with time at 21:00:00
-    string_date_end = current_datetime.strftime("%Y-%m-%d 21:00:00")
+    # convert current date to string with time at 23:59:00
+    string_date_end = current_datetime.strftime("%Y-%m-%d 23:59:00")
 
     # convert day start string into object
     date_object_start = datetime.datetime.strptime(string_date_start, "%Y-%m-%d %H:%M:%S")
