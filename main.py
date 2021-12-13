@@ -1,6 +1,5 @@
-## @File WCIE
+## @package main
 #  \brief     Shows Temperature-data around the Zurich See
-#  \details   none
 #  \author    Marc Lippuner
 #  \author    Franco Caminada
 #  \author    Gian Luca Brazerol
