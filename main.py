@@ -29,14 +29,14 @@ def datadict():
 
 def file_scanner():
     """Returns a dictionary with location name as key and a string of water temperatures as value.
-    Locations and values read in from text file "tempData.txt" """
+    Locations and values read in from text file 'tempData.txt'"""
     data_dict = dict()
     with open("tempData.txt", encoding="utf-8") as file:
         for line in file:                             # iteration line by line
             data_string = line.rstrip()               # reads line into string
             data_list = data_string.split(",")        # splits string into substrings after every comma
             data_dict[data_list[0]] = list(float(x) for x in data_list[1:-1])  # adds element to dictionary:
-            # 1. substring as key, others as float numbers
+            # first substring as key, others as float numbers
     return data_dict
 
 
@@ -49,7 +49,7 @@ def location_scanner():
             data_string = line.rstrip()             # reads line into string
             data_list = data_string.split(",")      # splits string into substrings after every comma
             location_dict[data_list[0]] = (int(data_list[1]), int(data_list[2]))    # adds element to dictionary:
-            # 1. substring as key, 2. and 3. string as value (int tuple)
+            # first substring as key, 2nd and 3rd string as value (int tuple)
     return location_dict
 
 
