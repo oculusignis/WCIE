@@ -134,13 +134,14 @@ def savetofile(dataDictionary):
             f.write(str(key) + "," + newval + "\n")
 
 
-# program execution
-if datecomparison():
-    ## \var location_temps
-    # contains all the data needed in a Dictionary
-    location_temps = file_scanner()
-else:
-    location_temps = datadict()
-    savetofile(location_temps)
+if __name__ == "__main__":
+    # program execution
+    if datecomparison():
+        ## \var location_temps
+        # contains all the data needed in a Dictionary
+        location_temps = file_scanner()
+    else:
+        location_temps = datadict()
+        savetofile(location_temps)
 
-dict_printer(location_temps)
+    dict_printer(location_temps)
