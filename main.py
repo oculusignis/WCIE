@@ -1,7 +1,20 @@
+## @File WCIE
+#  \brief     Shows Temperature-data around the Zurich See
+#  \details   none
+#  \author    Marc Lippuner
+#  \author    Franco Caminada
+#  \author    Gian Luca Brazerol
+#  \author    Luca Brügger
+#  \date      13.12.2021
+#  \bug       none
+#  \copyright GNU Public License.
+
 import requests
 import datetime
 import os
 
+## \fn templist(url)
+# \param url The url as a String.
 
 def templist(url):
     """converts the url response to a list containing only the temperatures"""
@@ -14,8 +27,10 @@ def templist(url):
     float_list = [float(x) for x in data_list]
     return float_list
 
+## \fn datadict()
 
 def datadict():
+    """creates dictionary with current temperature-data for each location"""
     time1, time2 = timestamp()
     data = {}
     locations = location_scanner()
@@ -26,6 +41,7 @@ def datadict():
 
     return data
 
+## \fn file_scanner()
 
 def file_scanner():
     """Returns a dictionary with location name as key and a string of water temperatures as value.
@@ -39,6 +55,7 @@ def file_scanner():
             # first substring as key, others as float numbers
     return data_dict
 
+## \fn location_scanner()
 
 def location_scanner():
     """Returns a dictionary with location name as key and a tuple of int (X and Y coordinates) as value.
@@ -52,12 +69,15 @@ def location_scanner():
             # first substring as key, 2nd and 3rd string as value (int tuple)
     return location_dict
 
+## \fn dict_printer(data_dict)
+# \param data_dict The Dictionary.
 
 def dict_printer(data_dict):
-    """"Takes a dictionary and prints it to the console: Location: Value (actual time)"""
+    """Takes a dictionary and prints it to the console: Location: Value (actual time)"""
     for key in data_dict:
         print(f"{key+':':<25} {data_dict[key][int(datetime.datetime.now().hour/3)]:>.1f} °C")
 
+## \fn timestamp()
 
 def timestamp():
     """converts current date start and date at 9pm into two epoch time stamps"""
@@ -81,6 +101,7 @@ def timestamp():
 
     return millisecstart, millisecend
 
+## \fn datecomparison()
 
 def datecomparison():
     """read last modified date of file and compare it to current date, returns bool"""
@@ -101,9 +122,9 @@ def datecomparison():
     return string_current_date == filedate
 
 
-## Function to save a Dictionary
-# The Dictionary will be saved line per line 
-# with the key and the value separated by a comma.
+## \fn savetofile(dataDictionary)
+# \param dataDictionary The Dictionary.
+
 def savetofile(dataDictionary):
     """save dictionary to file line per line (key and value separated by comma)"""
     with open('tempData.txt', 'w', encoding='utf-8') as f:
@@ -114,11 +135,10 @@ def savetofile(dataDictionary):
             f.write(str(key) + "," + newval + "\n")
 
 
-# dict_printer(datadict())
-# datecomparison()
-
 # program execution
 if datecomparison():
+    ## \var location_temps
+    # contains all the data needed in a Dictionary
     location_temps = file_scanner()
 else:
     location_temps = datadict()

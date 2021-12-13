@@ -1,9 +1,10 @@
 var indexSectionsWithContent =
 {
-  0: "mrsu",
+  0: "dflmst",
   1: "m",
   2: "m",
-  3: "rsu"
+  3: "dflst",
+  4: "l"
 };
 
 var indexSectionNames =
@@ -11,7 +12,8 @@ var indexSectionNames =
   0: "all",
   1: "namespaces",
   2: "files",
-  3: "variables"
+  3: "functions",
+  4: "variables"
 };
 
 var indexSectionLabels =
@@ -19,6 +21,7 @@ var indexSectionLabels =
   0: "All",
   1: "Namespaces",
   2: "Files",
-  3: "Variables"
+  3: "Functions",
+  4: "Variables"
 };
 
